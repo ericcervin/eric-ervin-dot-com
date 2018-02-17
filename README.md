@@ -1,2 +1,3 @@
 # eric-ervin-dot-com
-The JavaScript guts of ericervin.com (coming soon)
+
+Practice working with Javascript and Express. Maybe I'll make something useful along the way.
