@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-app.get('/',(req,res) => {res.send(`
+const rootHtml = `
  <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -24,7 +24,10 @@ app.get('/',(req,res) => {res.send(`
   </body>
   </html>
 
-`)})
+`
+
+
+app.get('/',(req,res) => {res.send(rootHtml)})
 
 
 app.listen(8000,() => console.log("Listening to 8000"));
