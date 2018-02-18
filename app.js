@@ -1,7 +1,9 @@
 const express = require('express');
+const Mustache = require('mustache');
+const logger = require('morgan');
 const app = express();
 
-const rootHtml = `
+const rootTemplate = `
  <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -26,8 +28,9 @@ const rootHtml = `
 
 `
 
+app.use(logger("short"));
 
-app.get('/',(req,res) => {res.send(rootHtml)})
+app.get('/',(req,res) => {res.send(Mustache.render(rootTemplate))})
 
 
 app.listen(8000,() => console.log("Listening to 8000"));
