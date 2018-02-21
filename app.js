@@ -28,9 +28,11 @@ const rootTemplate = `
 
 `
 
+
 app.use(logger("short"));
 
-app.get('/',(req,res) => {res.send(Mustache.render(rootTemplate))})
+app.get('/',(req,res) => {res.send(Mustache.render(rootTemplate))});
 
+app.use(function(req,res) {res.status(404).send("<!DOCTYPE html><html lang=\"en\"><head><title>404</title></head><body><p><strong>404 not found</strong></body></html>")});
 
 app.listen(8000,() => console.log("Listening to 8000"));
