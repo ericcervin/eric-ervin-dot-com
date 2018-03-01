@@ -22,7 +22,9 @@ const rootTemplate = `
   <body>
   <div id="header">
   <h1>Eric Ervin Dot Com</h1>
-  <p>A toy website to release some Javascript into the world.</p>
+  <p>A toy website to release some JavaScript into the world.</p>
+  <p>Though it's a toy, these are resources I use. (Except that I've quit playing Powerball)</p>
+  <p>There is a (twin) sister site written in Clojure: <a href = "http://ericervin.org">http://ericervin.org</a>
   <p><a href="https://github.com/ericcervin/eric-ervin-dot-com">https://github.com/ericcervin/eric-ervin-dot-com</a></p>
   <br>
   </div>
@@ -49,4 +51,4 @@ app.get('/powerball',(req,res) => (res.send(powerballHTML())));
 
 app.use(function(req,res) {res.status(404).send("<!DOCTYPE html><html lang=\"en\"><head><title>404</title></head><body><p><strong>404 not found</strong></body></html>")});
 
-app.listen(8000,() => console.log("Listening to 8000"));
+app.listen(8080,() => console.log("Listening to 8080"));
