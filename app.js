@@ -3,8 +3,8 @@ const Mustache = require('mustache');
 const logger = require('morgan');
 const app = express();
 
-const serialHTML = require('./serialism');
-const powerballHTML = require('./powerball');
+const serialism = require('./routes/serialism');
+const powerball = require('./routes/powerball');
 
 const rootTemplate = `
  <!DOCTYPE html>
@@ -46,9 +46,8 @@ const rootTemplate = `
 app.use(logger("short"));
 
 app.get('/',(req,res) => {res.send(Mustache.render(rootTemplate))});
-app.get('/serialism',(req,res) => (res.send(serialHTML())));
-app.get('/powerball',(req,res) => (res.send(powerballHTML())));
-
+app.use('/powerball',powerball);
+app.use('/serialism',serialism);
 app.use(function(req,res) {res.status(404).send("<!DOCTYPE html><html lang=\"en\"><head><title>404</title></head><body><p><strong>404 not found</strong></body></html>")});
 
 app.listen(8080,() => console.log("Listening to 8080"));
