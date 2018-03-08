@@ -26,7 +26,7 @@ const destinyRootTemplate = `
   <div id=\"reports\">
   <h4>Reports</h4>
   <table>
-  <tr><td>Compatible with Villains, Command</td><td><a href="/destiny/reports/villain_command_compatible">HTML</a></td></tr>
+  <tr><td>Count by Affiliation/Faction</td><td><a href="/destiny/reports">HTML</a></td></tr>
   </table>
   </div>
   </body>
@@ -86,7 +86,7 @@ function destinyRootHTML(){return Mustache.render(destinyRootTemplate)};
 
 const destiny = express.Router();
 destiny.get('/',(req,res) => {res.send(destinyRootHTML())});
-destiny.get('/reports/villain_command_compatible',(req,res) => {destinyQuery(req,res)});
+destiny.get('/reports',(req,res) => {destinyQuery(req,res)});
 
 module.exports = destiny;
 
