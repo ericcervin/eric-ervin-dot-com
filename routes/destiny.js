@@ -28,6 +28,7 @@ const destinyRootTemplate = `
   <table>
   <tr><td>Count by Affiliation/Faction</td><td><a href="/destiny/reports/affiliation_faction_count">HTML</a></td></tr>
   <tr><td>Count by Rarity</td><td><a href="/destiny/reports/rarity_count">HTML</a></td></tr>
+  <tr><td>Count by Set</td><td><a href="/destiny/reports/set_count">HTML</a></td></tr>
   </table>
   </div>
   </body>
@@ -73,6 +74,10 @@ function destinyReport(req,res,id){
 		case "rarity_count":
             destinyQuery(req,res,{header: ["Rarity", "Count"], 
                                    query: "Select rarity, count(*) as count from card group by rarity"});
+						  break;
+		case "set_count":
+            destinyQuery(req,res,{header: ["Set", "Count"], 
+                                   query: "Select cardset, count(*) as count from card group by cardset"});
 						  break;
 		default:
 		      res.status(404).send("<!DOCTYPE html><html lang=\"en\"><head><title>404</title></head><body><p><strong>404 not found</strong></body></html>")
