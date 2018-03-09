@@ -74,6 +74,9 @@ function destinyReport(req,res,id){
             destinyQuery(req,res,{header: ["Rarity", "Count"], 
                                    query: "Select rarity, count(*) as count from card group by rarity"});
 						  break;
+		default:
+		      res.status(404).send("<!DOCTYPE html><html lang=\"en\"><head><title>404</title></head><body><p><strong>404 not found</strong></body></html>")
+						  break;
 		
 	}
 	
