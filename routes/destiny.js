@@ -26,7 +26,8 @@ const destinyRootTemplate = `
   <div id=\"reports\">
   <h4>Reports</h4>
   <table>
-  <tr><td>Count by Affiliation/Faction</td><td><a href="/destiny/reports">HTML</a></td></tr>
+  <tr><td>Count by Affiliation/Faction</td><td><a href="/destiny/reports/affiliation_faction_count">HTML</a></td></tr>
+  <tr><td>Count by Rarity</td><td><a href="/destiny/reports/rarity_count">HTML</a></td></tr>
   </table>
   </div>
   </body>
@@ -53,32 +54,48 @@ const destinyReportTemplate = `
   <div id=\"report\">
   <table>
   <thead>
-  <tr><th>Affiliation</th><th>Faction</th><th>Count</th></tr>
+  <tr>{{#header}}<th>{{.}}</th>{{/header}}</tr>
   </thead>
   <tbody>
-  {{#results}}<tr><td>{{affiliation}}</td><td>{{faction}}</td><td>{{count}}</td></tr>{{/results}}
+  {{#results}}<tr>{{#result}}<td>{{.}}</td>{{/result}}</tr>{{/results}}
   </tbody>
   </table>
   </div>
   </body>
   </html>`
   
+function destinyReport(req,res,id){
+	switch(id){
+		case "affiliation_faction_count": 
+            destinyQuery(req,res,{header: ["Affilliation", "Faction", "Count"],
+                                  query: "Select affiliation, faction, count(*) as count from card group by affiliation, faction"});
+						  break;
+		case "rarity_count":
+            destinyQuery(req,res,{header: ["Rarity", "Count"], 
+                                   query: "Select rarity, count(*) as count from card group by rarity"});
+						  break;
+		
+	}
+	
+}
   
-function destinyQuery(req,res){
+  
+function destinyQuery(req,res,obj){
 	let db = new sqlite3.Database('./db/destiny.db', (err)=>{
 	if (err){console.log(err.message);}
 	    console.log('connected to destiny db');
     }
 	)
 	
-	let sql = `Select affiliation, faction, count(*) as count from card group by affiliation, faction`;
+	let sql = obj.query;
 
 db.all(sql,(err,rows) => {
 	if (err){
 		throw err;
 	}
-	//console.log(Mustache.render(destinyReportTemplate,{results: rows}));
-	res.send(Mustache.render(destinyReportTemplate,{results: rows}));
+	
+	rows = rows.map((x)=>{return {result: Object.values(x)}})
+	res.send(Mustache.render(destinyReportTemplate,{header: obj.header, results: rows}));
 	
 })
 } 
@@ -86,10 +103,7 @@ function destinyRootHTML(){return Mustache.render(destinyRootTemplate)};
 
 const destiny = express.Router();
 destiny.get('/',(req,res) => {res.send(destinyRootHTML())});
-destiny.get('/reports',(req,res) => {destinyQuery(req,res)});
+destiny.get('/reports/:id',(req,res) => {destinyReport(req,res,req.params.id)});
+
 
 module.exports = destiny;
-
-/*
- 
- */
