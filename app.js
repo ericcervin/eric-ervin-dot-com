@@ -16,4 +16,4 @@ app.use('/powerball',powerball);
 app.use('/serialism',serialism);
 app.use(function(req,res) {res.status(404).send("<!DOCTYPE html><html lang=\"en\"><head><title>404</title></head><body><p><strong>404 not found</strong></body></html>")});
 
-app.listen(8080,() => console.log("Listening to 8080"));
+app.listen(80,() => console.log("Listening to 80"));
