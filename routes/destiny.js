@@ -33,6 +33,7 @@ const destinyRootTemplate = `
   <tr><td>Rarity Legendary Cards</td><td><a href="/destiny/reports/legendary">HTML</a></td></tr>
   <tr><td>Rarity Rare Cards</td><td><a href="/destiny/reports/rare">HTML</a></td></tr>
   <tr><td>Type Character Cards</td><td><a href="/destiny/reports/type_character">HTML</a></td></tr>
+  <tr><td>Type Upgrade Cards</td><td><a href="/destiny/reports/type_upgrade">HTML</a></td></tr>
   </table>
   </div>
   </body>
@@ -102,6 +103,10 @@ function destinyReport(req,res,id){
                                 query: "Select cardsetcode, position, name, typename, affiliation, factioncode, isunique, raritycode, cminpoints, cmaxpoints, chealth, csides, imgsrc from card where typename = \"Character\""});
 						  break;
 						  
+		case "type_upgrade":
+            destinyQuery(req,res,{header: ["Set", "Pos", "Name", "Type", "Affilliation", "Faction", "Is Unique", "Rarity", "Cost", "Sides", "Image"], 
+                                query: "Select cardsetcode, position, name, typename, affiliation, faction, isunique, raritycode, ccost, csides, imgsrc from card where typename = \"Upgrade\""});
+						  break;
 		default:
 		      res.status(404).send("<!DOCTYPE html><html lang=\"en\"><head><title>404</title></head><body><p><strong>404 not found</strong></body></html>")
 						  break;
