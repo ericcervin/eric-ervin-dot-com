@@ -135,7 +135,7 @@ db.all(sql,(err,rows) => {
 		throw err;
 	}
 	
-	rows = rows.map((x)=>{return {result: Object.values(x)}})
+	rows = rows.map(function(x){return {result: Object.values(x)}})
 	res.send(Mustache.render(destinyReportTemplate,{header: obj.header, results: rows}));
 	
 })
