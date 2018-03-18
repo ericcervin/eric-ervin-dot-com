@@ -26,6 +26,7 @@ const destinyRootTemplate = `
   <div id=\"reports\">
   <h4>Reports</h4>
   <table>
+  <tr><td>Compatible with Villains, Command</td><td><a href="/destiny/reports/villain_command_compatible">HTML</a></td></tr>
   <tr><td>Count by Affiliation/Faction</td><td><a href="/destiny/reports/affiliation_faction_count">HTML</a></td></tr>
   <tr><td>Count by Rarity</td><td><a href="/destiny/reports/rarity_count">HTML</a></td></tr>
   <tr><td>Count by Set</td><td><a href="/destiny/reports/set_count">HTML</a></td></tr>
@@ -106,6 +107,10 @@ function destinyReport(req,res,id){
 		case "type_upgrade":
             destinyQuery(req,res,{header: ["Set", "Pos", "Name", "Type", "Affilliation", "Faction", "Is Unique", "Rarity", "Cost", "Sides", "Image"], 
                                 query: "Select cardsetcode, position, name, typename, affiliation, faction, isunique, raritycode, ccost, csides, imgsrc from card where typename = \"Upgrade\""});
+						  break;
+		case "villain_command_compatible":
+            destinyQuery(req,res,{header: ["Set", "Pos", "Name", "Type", "Affilliation", "Faction", "Is Unique", "Rarity", "Cost", "Sides", "Image"], 
+                                query: "Select cardsetcode, position, name, typename, affiliation, factioncode, isunique, raritycode, ccost, csides, imgsrc from card where (affiliation = \"Villain\" or affiliation = \"Neutral\" ) and (faction = \"Command\" or faction = \"General\")"});
 						  break;
 		default:
 		      res.status(404).send("<!DOCTYPE html><html lang=\"en\"><head><title>404</title></head><body><p><strong>404 not found</strong></body></html>")
