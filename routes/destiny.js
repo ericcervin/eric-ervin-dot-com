@@ -23,6 +23,26 @@ const destinyRootTemplate = `
   <h3>Star Wars Destiny</h3>
   <br>
   </div>
+  <div id=\"cards\">
+  <h4>Cards</h4>
+  <table>
+  <thead>
+  <tr><th><th><th colspan=\"4\">Affiliation</th></tr>
+  <tr><th></th><th></th><th scope=\"col\">All</th><th scope=\"col\">Villain</th><th scope=\"col\">Hero</th><th scope=\"col\">Neutral</th></tr></thead>
+  <tbody>
+  <tr><th rowspan=\"5\">Faction</th><th scope=\"row\">All</th><td><a href=\"/destiny/cards?\">HTML</a></td><td><a href=\"/destiny/cards?affil=Villain\">HTML</a></td><td><a href=\"/destiny/cards?affil=Hero\">HTML</a></td><td><a href=\"/destiny/cards?affil=Neutral\">HTML</a></td></tr>
+  {{#factions}}
+  <tr>
+  <th scope=\"row\">{{.}}</th>
+  <td><a href=\"/destiny/cards?fact={{.}}\">HTML</a></td>
+  <td><a href=\"/destiny/cards?affil=Villain&amp;fact={{.}}\">HTML</a></td>
+  <td><a href=\"/destiny/cards?affil=Hero&amp;fact={{.}}\">HTML</a></td>
+  <td><a href=\"/destiny/cards?affil=Neutral&amp;fact={{.}}\">HTML</a></td>
+  </tr>
+  {{/factions}}
+  </tbody>
+  </table>
+  </div>
   <div id=\"reports\">
   <h4>Reports</h4>
   <table>
@@ -120,6 +140,19 @@ function destinyReport(req,res,id){
 	
 }
   
+function destinyCards(req,res){
+    const queryFields = "cardsetcode, position, name, typename, isunique, raritycode, affiliation, factioncode, cminpoints, cmaxpoints, chealth, csides,imgsrc";
+	const affil = req.query.affil;
+	const fact = req.query.fact;
+	if ((affil === undefined) && (fact === undefined)) {queryString = "Select " + queryFields + " from card"}
+	    else if ((affil === undefined) && (fact !== undefined)) {queryString = "Select " + queryFields + " from card where faction = \"" + fact + "\""}
+		else if ((affil !== undefined) && (fact === undefined)) {queryString = "Select " + queryFields + " from card where affiliation = \"" + affil + "\""}
+		else if ((affil !== undefined) && (fact !== undefined)) {queryString = "Select " + queryFields + " from card where affiliation = \"" + affil + "\" and faction = \"" + fact + "\"";}
+	//console.log(queryString);
+	
+	destinyQuery(req,res,{header: ["Set", "Pos", "Name", "Type", "Unique", "Rarity", "Affil", "Faction", "Min<br>Cost", "Max<br>Cost", "Health", "Sides", "Img Source"],
+                          query: queryString});
+}
   
 function destinyQuery(req,res,obj){
 	let db = new sqlite3.Database('./db/destiny.db', (err)=>{
@@ -140,11 +173,11 @@ db.all(sql,(err,rows) => {
 	
 })
 } 
-function destinyRootHTML(){return Mustache.render(destinyRootTemplate)};
+function destinyRootHTML(){return Mustache.render(destinyRootTemplate, {factions: ["Command", "Force", "Rogue", "General"]})};
 
 const destiny = express.Router();
 destiny.get('/',(req,res) => {res.send(destinyRootHTML())});
 destiny.get('/reports/:id',(req,res) => {destinyReport(req,res,req.params.id)});
-
+destiny.get('/cards',(req,res) => {destinyCards(req,res)});
 
 module.exports = destiny;
