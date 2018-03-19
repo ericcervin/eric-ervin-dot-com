@@ -28,6 +28,7 @@ const rootTemplate = `
   <table>
   <thead><tr><th scope="col">Resource</th><th scope="col">Description</th><th scope="col">Data Updated</th></tr></thead>
   <tbody>
+  <tr><td><a href="/destiny">Destiny</a></td><td>Star Wars Destiny card game data</td><td>03/16/2018</td></tr>
   <tr><td><a href="/powerball">Powerball</a></td><td>A source for Powerball numbers to play</td><td>N/A</td></tr>
   <tr><td><a href="/serialism">Serialism</a></td><td>Toying with set theory and dodecaphony</td><td>N/A</td></tr>
   </tbody>
