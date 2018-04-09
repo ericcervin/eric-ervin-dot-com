@@ -20,7 +20,7 @@ const destinyRootTemplate = `
   </head>
   <body>
   <div id=\"header\">
-  <h3>Star Wars Destiny</h3>
+  <h1>Star Wars Destiny</h1>
   <br>
   </div>
   <div id=\"cards\">
@@ -79,7 +79,7 @@ const destinyReportTemplate = `
   </head>
   <body>
   <div id=\"report\">
-  <table>
+  <table id="id_card_table">
   <thead>
   <tr>{{#header}}<th>{{.}}</th>{{/header}}</tr>
   </thead>
