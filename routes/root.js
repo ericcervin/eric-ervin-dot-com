@@ -43,5 +43,8 @@ function rootHTML(){return Mustache.render(rootTemplate)};
 
 const root = express.Router();
 root.get('/',(req,res) => {res.send(rootHTML())});
-
+root.get('/robots.txt', function(req,res) { 
+        res.type('text/plain');
+        res.send("User-agent: *\nDisallow: /");
+})
 module.exports = root;
