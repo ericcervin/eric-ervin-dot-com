@@ -2,4 +2,4 @@
 
 Practice working with JavaScript and Express. Maybe I'll make something useful along the way.
 
-Typically parked at ericervin.com .
+Formerly parked at ericervin.com . Currently mothballed.
